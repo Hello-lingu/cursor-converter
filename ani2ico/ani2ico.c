@@ -8,8 +8,7 @@
 void ReadFile(char *name);
 int test_for_icon_string(char *buffer,int start);
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     if (argc != 2) {
 		fprintf(stderr, "Please give an .ani filename as an argument.\n");
         return 0;
@@ -19,23 +18,14 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int test_for_icon_string(char *buffer,int start)
-{
-    if (*(buffer+start) == 0x69) {
-        if (*(buffer+start+1) == 0x63) {
-            if (*(buffer+start+2) == 0x6f) {
-                if (*(buffer+start+3) == 0x6e) {
-                    return 1;
-                }
-            }
-        }
-    } else return 0;
+// optimize
+int test_for_icon_string(char *buffer,int start) {
+    return (*(unsigned int *)(buffer + start) == 0x6e6f6369);
 }
 
-void ReadFile(char *name)
-{
+void ReadFile(char *name) {
 	FILE *file;
-	char *buffer,*fileName;
+	char *buffer, *fileName;
 	unsigned long fileLen;
 
     if (!strstr(name,".ani")) {
